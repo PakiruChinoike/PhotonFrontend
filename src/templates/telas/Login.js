@@ -1,20 +1,26 @@
-import React from "react"
+import React, { useState } from "react"
+import LoginPadrao from "../fragmentos/LoginPadrao"
+import Cadastrando from "../fragmentos/Cadastrando"
 
 export default function Login() {
-
+    
+    const [isCadastro, setIsCadastro] = new useState(false)
 
 
     return (
         <div className="Login" id="Login">
-            <title>Login Photon</title>
-                <h1>Phton</h1>
-                    <button>Entrar como professor</button>
-                    <h3>Ou</h3>
-                    <button>Entrar como Aluno</button>
-                    
-                <p>Ao continuar, você concorda com os nossosTermos de</p> 
-                <p>Serviço e Política de Privacidade</p>
-        </div>
 
+                
+                { !isCadastro ? 
+                    <LoginPadrao setIsCadastro={setIsCadastro} />
+                    :
+                    <Cadastrando />
+                }
+
+
+                    
+                <p>Ao continuar, você concorda com os nossos</p> 
+                <p>Termos de Serviço e Política de Privacidade</p>
+        </div>
     )
 }

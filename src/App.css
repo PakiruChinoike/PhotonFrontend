@@ -1,49 +1,182 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
 #Login {
-  background-color: #f1ead1;
-  font-family: sans-serif;
-  color: black;
-  display: flex;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    background-color: #f2e9cf;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+
+  /*Título*/
+  h1 {
+    font-size: 64px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #305c52;
+    text-shadow: 2px 2px #c3bfae;
+    margin-bottom: 0;
+  }
+
+  /*Título da tela*/
+  h3 {
+    color: #305c52;
+    font-size: 22px;
+    margin: 10px 0 5px;
+  }
+
+  /*Instrução*/
+  p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 350px;
+  }
+
+  /*Caixas de texto*/
+  form {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type="email"],
+  input[type="name"],
+  input[type="password"]{
+    width: 300px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  /*Button*/
+  button {
+    background-color: #3a776a; 
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 300px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #2b5c51;
+  }
+
+  /*escrita dentro do button*/
+  div {
+    text-align: center;
+  }
+
+  /*Termos*/
+  footer, small {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    line-height: 1.2; 
+    margin: 0; 
+    padding: 0;
+  }
+}
+
+#Header {
+    background-color: #f3ebcf; 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+
+  /*nav */
+  .Explorar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3a7b7b; 
+    padding: 10px 20px;
+  }
+
+  .Explorar input[type="text"] {
+    width: 350px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+  }
+
+  Header button {
+    background-color: #5aa7a7;
+    border: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .Explorar button:hover {
+    background-color: #498f8f;
+  }
+
+  .Explorar label {
+    background-color: #5aa7a7;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+  }
+
+  /* ====== CONTEÚDO DAS AULAS ====== */
+  .Home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .aulas-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .aula {
+    background-color: #8bb3ae;
+    width: 300px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .aula-topo {
+    display: flex;
+    justify-content: space-between;
+    background-color: #3a7b7b;
+    padding: 10px;
+  }
+
+  .aula-topo input {
+    background-color: #5aa7a7;
+    border: none;
+    border-radius: 6px;
+    padding: 5px;
+    color: white;
+    width: 45%;
+    text-align: center;
+  }
+
+  .aula h3 {
+    text-align: center;
+    color: #2c6767;
+    font-size: 22px;
+    margin: 20px 0;
+  }
 }
