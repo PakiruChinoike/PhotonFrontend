@@ -1,3 +1,16 @@
+:root {
+  --cor-placeholder: #757575;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
 #Login {
     background-color: #f2e9cf;
     font-family: Arial, Helvetica, sans-serif;
@@ -95,88 +108,105 @@
 
 
   /*nav */
-  .Explorar {
+  & .Explorar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #3a7b7b; 
+    background-color: #41848d; 
     padding: 10px 20px;
   }
 
-  .Explorar input[type="text"] {
-    width: 350px;
-    padding: 8px 10px;
+  & .Explorar div.usuario {
+    display: flex;
+    align-items: center;
+    
+    &>label{
+      cursor: pointer;
+    }
+  }
+
+   & label {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 6px 15px;
+    margin-left: 3px;
+    display: flex;
+    
+  }
+}
+
+#Header .btn {
+  background-color: #73a7a5;
+  color: white;
+  cursor: pointer;
+  border: 3px solid transparent;
+  
+  &.abrir{
+    border-radius: 8px;
+    padding: 6px 50px;
+    margin-left: 10px;
+    font-size: 20px;
+    transition: 0.3s;
+  }
+  &.abrir:hover{
+    border-color: #11605d;
+    transform: scale(1.1);
+  }
+  
+
+  &.criar{
+    border-radius: 8px;
+    padding: 6px 50px;
+    margin-left: 10px;
+    font-size: 20px;
+    transition: border-color 0.3s;
+  }
+
+  &.criar:hover{
+    border-color: #11605d;
+    transform: scale(1.1);
+  }
+
+  &.perfil{
+    background-color: #ffffff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+#Header .busca {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 350px;
+
+  & input[type="text"] {
+    width: 100%;
+    padding: 10px 10px;
     border: none;
     border-radius: 20px;
     outline: none;
+    font-size: 20px;
   }
 
-  Header button {
-    background-color: #5aa7a7;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 10px;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
+  &>p.lupa-explorar {
+    color: var(--cor-placeholder);
+    font-size: 2rem;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    transform: scaleX(-1) translate(-0%, -50%);
+    top: 50%;
+    left: 85%;
+    display: inline-block;
     cursor: pointer;
   }
-
-  .Explorar button:hover {
-    background-color: #498f8f;
-  }
-
-  .Explorar label {
-    background-color: #5aa7a7;
-    padding: 8px 16px;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-  }
-
-  /* ====== CONTEÚDO DAS AULAS ====== */
-  .Home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-  }
-
-  .aulas-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    margin-top: 40px;
-  }
-
-  .aula {
-    background-color: #8bb3ae;
-    width: 300px;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .aula-topo {
-    display: flex;
-    justify-content: space-between;
-    background-color: #3a7b7b;
-    padding: 10px;
-  }
-
-  .aula-topo input {
-    background-color: #5aa7a7;
-    border: none;
-    border-radius: 6px;
-    padding: 5px;
-    color: white;
-    width: 45%;
-    text-align: center;
-  }
-
-  .aula h3 {
-    text-align: center;
-    color: #2c6767;
-    font-size: 22px;
-    margin: 20px 0;
-  }
 }
+
+
