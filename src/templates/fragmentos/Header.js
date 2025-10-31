@@ -20,10 +20,16 @@ export default function Header({ setSelecionarShow }) {
             {(headerType == 'padrao') ? 
             <>
             <nav className="Explorar">
-                <div className="busca">
-                    <input type="text" placeholder="Explorar" />
-                    <p className="lupa-explorar">&#x1F50E;&#xFE0E;</p>
-                </div>
+                {(window.location.pathname == '/perfil') ? 
+                    <Link to="/">
+                        <button className="btn voltar">Voltar</button>
+                    </Link>
+                    :
+                    <div className="busca">
+                        <input type="text" placeholder="Explorar" />
+                        <p className="lupa-explorar">&#x1F50E;&#xFE0E;</p>
+                    </div>
+                }
                 <button className="btn abrir" onClick={() => {setSelecionarShow(true)}}>Abrir aula</button>
                 <button className="btn criar">Criar aula</button>
                 <Link to="/perfil">

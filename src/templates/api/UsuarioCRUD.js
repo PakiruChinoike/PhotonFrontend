@@ -1,6 +1,6 @@
 import React from "react";
 
-import { collection, getDoc, doc, setDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, getDoc, doc, setDoc, query, where, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
     /* 
@@ -14,17 +14,30 @@ function sanitizeEmail(email) {
 }
 
 export const addUsuario = async (email, data) => {
-  const id = sanitizeEmail(email);
-  const ref = doc(db, "usuarios", id);
-  const snapshot = await getDoc(ref);
-
-  if (snapshot.exists()) {
-    throw new Error("E-mail já cadastrado");
+  try {
+    const docRef = await addDoc(collection(db, "usuarios"), {
+      nome: data.nome,
+      senha: data.senha,
+      email: email,
+    })
+    console.log("document writtend with ID: ", docRef.id)
+  } catch (e) {
+    console.error("Error adding document: ", e)
   }
+}
 
-  await setDoc(ref, { ...data, email: id });
-  console.log({ ...data, email: id });
-};
+// export const addUsuario = async (email, data) => {
+//   const id = sanitizeEmail(email);
+//   const ref = doc(db, "usuarios", id);
+//   const snapshot = await getDoc(ref);
+
+//   if (snapshot.exists()) {
+//     throw new Error("E-mail já cadastrado");
+//   }
+
+//   await setDoc(ref, { ...data, email: id });
+//   console.log({ ...data, email: id });
+// };
 
 export const getUsuarioByEmail = async (email) => {
   const usuariosRef = collection(db, "usuarios");
