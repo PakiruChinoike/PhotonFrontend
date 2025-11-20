@@ -3,17 +3,13 @@ import { useHeader } from "../../context/HeaderContext"
 import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 
-export default function Header({ setSelecionarShow }) {
+export default function Header({ setSelecionarShow, setCriarAulaShow }) {
     const { headerType } = useHeader();
     const { user, login, logout } = useUser();
     const [usuario, setUsuario] = useState(null)
     const [edicaoShow, setEdicaoShow] = useState(false)
     const [codigo, setCodigo] = useState("178232")
     const [numAlunos, setNumAlunos] = useState(10)
-
-    useEffect(() => {
-        login("Roberto")
-    }, [])
 
     return (
         <header id="Header">
@@ -30,12 +26,18 @@ export default function Header({ setSelecionarShow }) {
                         <p className="lupa-explorar">&#x1F50E;&#xFE0E;</p>
                     </div>
                 }
-                <button className="btn abrir" onClick={() => {setSelecionarShow(true)}}>Abrir aula</button>
-                <button className="btn criar">Criar aula</button>
+                <button className="btn abrir" onClick={() => {
+                    setSelecionarShow((prev) => !prev)
+                    setCriarAulaShow(false)
+                }}>Abrir aula</button>
+                <button className="btn criar" onClick={() => {
+                    setCriarAulaShow((prev) => !prev)
+                    setSelecionarShow(false)
+                }}>Criar aula</button>
                 <Link to="/perfil">
                     <div className="usuario">
                         <button className="btn perfil">Perfil</button>
-                        <label>{user}</label>
+                        <label>{user.nome}</label>
                     </div>
                 </Link>
             </nav>

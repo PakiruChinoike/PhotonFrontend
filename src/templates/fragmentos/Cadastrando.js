@@ -1,27 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUsuario } from "../api/UsuarioCRUD";
+import { useUser } from "../../context/UserContext";
 
 export default function Cadastrando() {
+    const { login } = useUser();
     
     const navigate = useNavigate()
 
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const [senhaConfirmar, setSenhaConfirmar] = useState("")
+
+    const verificaSenha = (senha) => {
+        const regex = /^(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?!.*\s).{8,}$/;
+
+        return regex.test(senha);
+    }
 
     const realizaCadastro = async (e) => {
         e.preventDefault()
 
+        if (!verificaSenha) {
+            alert("A senha precisa ter pelo menos 8 caracteres, 1 número e 1 caractere especial")
+            return
+        }
+
+        if (senha.trim() != senhaConfirmar.trim() || !nome || !email ) return;
+
         var data = {
             "nome": nome.trim(),
-            "senha": senha.trim()
+            "senha": senha.trim(),
+            "email": email.trim(),
         }
 
         try {
-            await addUsuario(email.trim(), data)
+            var response = await addUsuario(data)
+            console.log(response)
+            login(data)
             alert("Usuário cadastrado com sucesso!")
-            navigate("/", { replace: true})
+            navigate("/", { replace: true })
         } catch (err) {
             alert(err.message)
             console.error("Erro", err)
@@ -59,6 +78,13 @@ export default function Cadastrando() {
                             placeholder="senha" 
                             value={senha}
                             onChange={(e) => {setSenha(e.target.value)}}
+                        />
+                        <input 
+                            type="password" 
+                            id="senhaConfirmar" name="senhaConfirmar" 
+                            placeholder="confirmar senha" 
+                            value={senhaConfirmar}
+                            onChange={(e) => {setSenhaConfirmar(e.target.value)}}
                         />
                     </form>
                 </div>

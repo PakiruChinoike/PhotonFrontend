@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getAulaByUsuario } from "../api/AulaCRUD";
+import { getAulaByUsuario } from "../../api/AulaCRUD";
 
-export default function SelecionarAulaModal({show, setShow}) {
+export default function SelecionarAulaModal({show, setShow, setShowCriar}) {
     const [aulas, setAulas] = useState([])
 
     useEffect(() => {
@@ -21,8 +21,11 @@ export default function SelecionarAulaModal({show, setShow}) {
 
     return (
         <>
-            {show && 
-                <div>
+        {show && 
+            <div id="SelecionarAulaModal" className="modal">
+                {
+                    !(aulas.length > 0) ? 
+                    <>
                     <h2>Selecione a Aula</h2>
                     <select>
                     {aulas.map((aula) => (
@@ -32,8 +35,19 @@ export default function SelecionarAulaModal({show, setShow}) {
                     ))}
                     </select>
                     <button>Abrir</button>
-                </div>
-            }
+                    </> 
+                    :
+                    <>
+                    <h2>Você não possui nenhuma aula no momento</h2>
+                    <button onClick={() => {
+                        setShowCriar(true) 
+                        setShow(false)
+                    }}>Criar?</button>
+                    </>
+                }
+                <button className="fecharModal" onClick={() => setShow(false)}>X</button>
+            </div>
+        }
         </>
     )
 

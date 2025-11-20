@@ -1,30 +1,45 @@
 import React, {useContext, useEffect, useState} from "react"
 import Header from "../fragmentos/Header"
-import { addUsuario } from "../api/UsuarioCRUD"
-import { useNavigate } from "react-router-dom"
+import { addUsuario, getUsuarioByEmail } from "../api/UsuarioCRUD"
+import { Navigate, useNavigate } from "react-router-dom"
 import { useUser } from "../../context/UserContext"
-import SelecionarAulaModal from "../fragmentos/SelecionarAulaModal"
-import ConfirmarSenhaModal from "../fragmentos/ConfirmarSenhaModal"
+import SelecionarAulaModal from "../fragmentos/modais/SelecionarAulaModal"
+import ConfirmarSenhaModal from "../fragmentos/modais/ConfirmarSenhaModal"
+import { useQuery } from "@tanstack/react-query"
+import { useConfirmacao } from "../../context/ConfirmacaoContext"
 
 export default function Perfil() {
     const { user, logout } = useUser();
+    const { confirmado, desconfirmar } = useConfirmacao();
     const navigate = useNavigate()
 
-    const [shownConfirmar, setShownConfirmar] = useState(false)
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['usuario'],
+        queryFn: async () => {
+            const response = await getUsuarioByEmail(user.email)
+            return response.json();
+        },
+        enabled: !!user,
+    })
+
+    const [showConfirmar, setShowConfirmar] = useState(false)
     const [foto, setFoto] = useState("")
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+    const [nome, setNome] = useState(user?.nome)
+    const [email, setEmail] = useState(user?.email)
+    const [senha, setSenha] = useState(user?.senha)
 
     useEffect(() => {
-        console.log("sexo")
+        desconfirmar()
     }, [])
     
+    if (!user) {
+        return <Navigate to="/login" replace />
+    }
 
     const confirmaEdicao = async (e) => {
         e.preventDefault()
 
-
+        if (!confirmado) setShowConfirmar(prev => !prev)
     }
 
     const editaFoto = async (e) => {
@@ -34,7 +49,7 @@ export default function Perfil() {
             "foto": foto.trim(),
         }
 
-        try{
+        try {
             await addUsuario (foto.trim(), data)
             alert("Usuário editado com sucesso!")
         } catch (err){
@@ -51,7 +66,7 @@ export default function Perfil() {
 
     return (
         <>
-        <ConfirmarSenhaModal shown={shownConfirmar} setShown={setShownConfirmar} />
+        <ConfirmarSenhaModal show={showConfirmar} setShow={setShowConfirmar} />
         <Header />
         <div className="Perfil" id="Perfil">
             <div className="foto">
@@ -60,16 +75,17 @@ export default function Perfil() {
             </div>
             <div>
                 <form>
-
                     <div>
                         <input 
-                        type="name" 
-                        id="nome" 
-                        name="nome" 
-                        placeholder="nome" 
-                        value={user}
-                        onChange={(e) => {setNome(e.target.value)}}
-                         />
+                            type="name" 
+                            id="nome" 
+                            name="nome" 
+                            placeholder="nome" 
+                            className={confirmado ? "habilitado" : "desabilitado"}
+                            value={nome}
+                            disabled={!confirmado}
+                            onChange={(e) => {setNome(e.target.value)}}
+                        />
                         <button type="button" onClick={(e) => confirmaEdicao(e)}>&#x270F;</button>
                     </div>
 
@@ -79,21 +95,25 @@ export default function Perfil() {
                             id="email" 
                             name="email" 
                             placeholder="email" 
+                            className={confirmado ? "habilitado" : "desabilitado"}
                             value={email}
+                            disabled={!confirmado}
                             onChange={(e) => {setEmail(e.target.value)}} 
-                             />
-                             <button type="button" onClick={(e) => confirmaEdicao(e)}>&#x270F;</button>
+                        />
+                        <button type="button" onClick={(e) => confirmaEdicao(e)}>&#x270F;</button>
                     </div>
                     
                     <div>
-                            <input 
+                        <input 
                             type="password" 
                             id="senha" name="senha" 
                             placeholder="senha" 
+                            className={confirmado ? "habilitado" : "desabilitado"}
                             value={senha}
+                            disabled={!confirmado}
                             onChange={(e) => {setSenha(e.target.value)}}
-                            />
-                            <button type="button" onClick={(e) => confirmaEdicao(e)}>&#x270F;</button>
+                        />
+                        <button type="button" onClick={(e) => confirmaEdicao(e)}>&#x270F;</button>
                     </div>
                     
                 </form>
