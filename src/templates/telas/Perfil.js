@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { useUser } from "../../context/UserContext"
 import SelecionarAulaModal from "../fragmentos/modais/SelecionarAulaModal"
 import ConfirmarSenhaModal from "../fragmentos/modais/ConfirmarSenhaModal"
+import CriarAulaModal from "../fragmentos/modais/CriarAulaModal"
 import { useQuery } from "@tanstack/react-query"
 import { useConfirmacao } from "../../context/ConfirmacaoContext"
 
@@ -22,6 +23,8 @@ export default function Perfil() {
         enabled: !!user,
     })
 
+    const [selecionarShow, setSelecionarShow] = useState(false)
+    const [criarAulaShow, setCriarAulaShow] = useState(false)
     const [showConfirmar, setShowConfirmar] = useState(false)
     const [foto, setFoto] = useState("")
     const [nome, setNome] = useState(user?.nome)
@@ -66,8 +69,10 @@ export default function Perfil() {
 
     return (
         <>
+        <CriarAulaModal show={criarAulaShow} setShow={setCriarAulaShow} />
+        <SelecionarAulaModal show={selecionarShow} setShow={setSelecionarShow} setShowCriar={setCriarAulaShow}/>
         <ConfirmarSenhaModal show={showConfirmar} setShow={setShowConfirmar} />
-        <Header />
+        <Header setSelecionarShow={setSelecionarShow} setCriarAulaShow={setCriarAulaShow}/>
         <div className="Perfil" id="Perfil">
             <div className="foto">
                 <button onClick={(e) => editaFoto(e)}>&#x270F;</button>

@@ -5,15 +5,17 @@ import SelecionarAulaModal from "../fragmentos/modais/SelecionarAulaModal"
 import { getAulaByUsuario } from "../api/AulaCRUD"
 import AulaObjeto from "../fragmentos/AulaObjeto"
 import CriarAulaModal from "../fragmentos/modais/CriarAulaModal"
+import { useUser } from "../../context/UserContext"
 
 export default function Home() {
+    const { user } = useUser()
     const [selecionarShow, setSelecionarShow] = useState(false)
     const [criarAulaShow, setCriarAulaShow] = useState(false)
     const [aulas, setAulas] = useState([])
 
     useEffect(() => {
         const fetchAulas = async () => {
-            const fetchedAulas = await getAulaByUsuario(1)
+            const fetchedAulas = await getAulaByUsuario(user.id)
             setAulas(fetchedAulas)
 
             fetchedAulas.forEach(aula => {
@@ -33,9 +35,13 @@ export default function Home() {
             {aulas.map((aula) => (
                 <AulaObjeto 
                     key={aula.id}
-                    nomeAula={aula.nome_aula} 
-                    nomeProfessor={aula.nome_professor} 
-                    data={aula.data} 
+                    nomeAula={aula.nome} 
+                    nomeProfessor={user.nome} 
+                    data={
+                        aula.data?.toDate 
+                            ? aula.data.toDate().toLocaleDateString("pt-BR")
+                            : ""
+                    } 
                 />
             ))}
         </div>

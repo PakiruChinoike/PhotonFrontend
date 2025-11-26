@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./templates/telas/Home";
 import Login from "./templates/telas/Login";
 import Perfil from "./templates/telas/Perfil";
+import Aula from "./templates/telas/Aula";
 
 import { useUser } from "./context/UserContext";
 
@@ -33,6 +34,15 @@ export default function Rotas() {
                     element={
                         <PrivateRoute>
                             <Perfil />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route 
+                    path="/aula/:id"
+                    element={
+                        <PrivateRoute>
+                            <Aula />
                         </PrivateRoute>
                     }
                 />

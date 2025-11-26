@@ -50,7 +50,7 @@ a {
   }
 
   input[type="email"],
-  input[type="name"],
+  input[type="text"],
   input[type="password"]{
     width: 300px;
     padding: 12px;
@@ -196,6 +196,12 @@ a {
                                     cursor: pointer;
                                   }
                                 }
+
+/* AULA */
+
+#Aula {
+  padding-top: 10vh
+}
 
 /* MODAL */
 

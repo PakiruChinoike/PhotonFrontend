@@ -14,7 +14,7 @@ export default function Login() {
                 { !isCadastro ? 
                     <LoginPadrao setIsCadastro={setIsCadastro} />
                     :
-                    <Cadastrando />
+                    <Cadastrando setIsCadastro={setIsCadastro} />
                 }
 
 

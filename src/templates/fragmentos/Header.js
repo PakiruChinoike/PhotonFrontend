@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react"
 import { useHeader } from "../../context/HeaderContext"
 import { useUser } from "../../context/UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Header({ setSelecionarShow, setCriarAulaShow }) {
-    const { headerType } = useHeader();
-    const { user, login, logout } = useUser();
-    const [usuario, setUsuario] = useState(null)
-    const [edicaoShow, setEdicaoShow] = useState(false)
-    const [codigo, setCodigo] = useState("178232")
-    const [numAlunos, setNumAlunos] = useState(10)
+export default function Header({ setSelecionarShow, setCriarAulaShow, setEditarAulaShow }) {
+    const { headerType, desativaAula } = useHeader();
+    const { user } = useUser();
+    const navigate = useNavigate();
+
+    const fecharAula = (e) => {
+        e.preventDefault()
+
+        desativaAula()
+        navigate("/")
+    }
 
     return (
         <header id="Header">
             {(headerType == 'padrao') ? 
             <>
             <nav className="Explorar">
-                {(window.location.pathname == '/perfil') ? 
+                {(window.location.pathname == '/perfil' || window.location.pathname.startsWith('/aula')) ? 
                     <Link to="/">
                         <button className="btn voltar">Voltar</button>
                     </Link>
@@ -47,32 +51,11 @@ export default function Header({ setSelecionarShow, setCriarAulaShow }) {
             :
 
             <>
-            <button className="btn fechar">Fechar aula</button>
-            <div>
-                <label htmlFor="edicao">Edição</label>
-                {edicaoShow && 
-                <ul name="edicao">
-                    <li>
-                        <p>Adicionar Objeto</p>
-                        <ul>
-                            <li><input type="text" placeholder="Nome" /></li>
-                            <li><input type="file" placeholder="Arquivo" /></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <p>Excluir Aula</p>
-                        <ul>
-                            <label>Excluir Aula?</label>
-                            <button className="confirm nao">Não</button>
-                            <button className="confirm sim">Sim</button>
-                        </ul>
-                    </li>
-                </ul>
-                }
-            </div>
-            <h1 className="codigo_aula">{codigo}</h1>
-            <button className="btn trocar" onClick={() => {setSelecionarShow(true)}}>Trocar aula</button>
-            <h1 className="num_alunos">{numAlunos}</h1>
+            <nav className="Explorar">
+                <button className="btn fechar" onClick={(e) => {fecharAula(e)}}>Fechar aula</button>
+                <button className="btn editar" onClick={() => {setEditarAulaShow(prev => !prev)}}>Editar aula</button>
+                <button className="btn trocar" onClick={() => {setSelecionarShow(prev => !prev)}}>Trocar aula</button>
+            </nav>
             </>
             }
         </header>
